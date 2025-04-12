@@ -1,0 +1,53 @@
+//- layout.pug or layout.ejs
+doctype html
+html
+  head
+    title Dashboard
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css')
+    script(src="https://cdn.jsdelivr.net/npm/chart.js")
+    style.
+      body {
+        min-height: 100vh;
+        display: flex;
+      }
+      .sidebar {
+        width: 250px;
+        background-color: #343a40;
+        color: #fff;
+        padding: 20px;
+        min-height: 100vh;
+      }
+      .sidebar a {
+        color: #adb5bd;
+        text-decoration: none;
+        display: block;
+        padding: 10px 0;
+      }
+      .sidebar a:hover {
+        color: #fff;
+      }
+      .main-content {
+        flex-grow: 1;
+        padding: 30px;
+      }
+
+  body
+    .sidebar
+      h4.mb-4.text-white Asset Management
+      a(href="/dashboard") Dashboard
+      a(href="/employee") Employee Master
+      a(href="/assetCat") Asset Category Master
+      a(href="/assets") Asset Master
+      a(href="/asset-categories") Asset Category Master
+      a(href="/stock-view") Stock View
+      a(href="/issue-asset") Issue Asset
+      a(href="/return-asset") Return Asset
+      a(href="/scrap-asset") Scrap Asset
+      a(href="/asset-history") Asset History
+      hr
+      a(href="/logout", class="btn btn-sm btn-danger mt-3") Logout
+
+    .main-content
+      block content

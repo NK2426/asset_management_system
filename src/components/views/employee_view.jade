@@ -1,0 +1,49 @@
+doctype html
+html
+  head
+    title View Employee
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css')
+  body
+    .container.mt-5
+      h2.text-primary.mb-4 Employee Details
+
+      .card
+        .card-body
+          dl.row
+            dt.col-sm-4 Full Name
+            dd.col-sm-8 #{employee.name}
+
+            dt.col-sm-4 Email
+            dd.col-sm-8 #{employee.email}
+
+            dt.col-sm-4 Phone
+            dd.col-sm-8 #{employee.phone}
+
+            dt.col-sm-4 Department
+            dd.col-sm-8 #{employee.department}
+
+            dt.col-sm-4 Designation
+            dd.col-sm-8 #{employee.designation}
+
+            dt.col-sm-4 Salary
+            dd.col-sm-8 ₹#{employee.salary}
+
+            dt.col-sm-4 Date of Joining
+            dd.col-sm-8 #{employee.doj}
+
+            dt.col-sm-4 Date of Exit
+            dd.col-sm-8 #{employee.doe ? employee.doe : 'N/A'}
+
+            dt.col-sm-4 Address
+            dd.col-sm-8 #{employee.address}
+
+            dt.col-sm-4 Status
+            dd.col-sm-8 
+              if employee.status == 1 || employee.status === 'Active'
+                span.badge.bg-success Active
+              else
+                span.badge.bg-secondary Inactive
+
+          a.btn.btn-secondary.mt-3(href='/employee') ← Back to List

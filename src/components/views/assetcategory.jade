@@ -1,0 +1,51 @@
+doctype html
+html
+  head
+    title Asset Category Master
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css')
+    link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css')
+
+  body
+    block content
+      .container.mt-5
+        .card.shadow-sm
+          .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+            h5.mb-0 Asset Categories
+            a.btn.btn-light.btn-sm(href="/asset-category/add")
+              i.bi.bi-plus-circle.me-1
+              | Add Category
+
+          .card-body
+            if categories.length
+              .table-responsive
+                table.table.table-bordered.table-hover#assetCategoryTable
+                  thead.table-light
+                    tr
+                      th #
+                      th Category Name
+                      th Created At
+                      th Actions
+                  tbody
+                    each category, index in categories
+                      tr
+                        td #{index + 1}
+                        td #{category.name}
+                        td #{category.createdAt.toLocaleDateString()}
+                        td
+                          a.btn.btn-sm.btn-warning(href="/asset-category/edit/#{category.id}")
+                            i.bi.bi-pencil-fill
+                          a.btn.btn-sm.btn-danger.ms-2(href="/asset-category/delete/#{category.id}" onclick="return confirm('Are you sure you want to delete this category?');")
+                            i.bi.bi-trash-fill
+            else
+              p.text-muted.mb-0 No categories found.
+
+    script(src='https://code.jquery.com/jquery-3.7.0.min.js')
+    script(src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js')
+    script(src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js')
+    script.
+      $(document).ready(function() {
+        $('#assetCategoryTable').DataTable();
+      });

@@ -1,0 +1,34 @@
+dl.row
+  dt.col-sm-4.mb-2.text-start Full Name
+  dd.col-sm-8.mb-2.text-start #{employee.name}
+
+  dt.col-sm-4.mb-2.text-start Email
+  dd.col-sm-8.mb-2.text-start #{employee.email}
+
+  dt.col-sm-4.mb-2.text-start Phone
+  dd.col-sm-8.mb-2.text-start #{employee.phone}
+
+  dt.col-sm-4.mb-2.text-start Department
+  dd.col-sm-8.mb-2.text-start #{employee.department}
+
+  dt.col-sm-4.mb-2.text-start Designation
+  dd.col-sm-8.mb-2.text-start #{employee.designation}
+
+  dt.col-sm-4.mb-2.text-start Salary
+  dd.col-sm-8.mb-2.text-start ₹#{employee.salary}
+
+  dt.col-sm-4.mb-2.text-start Date of Joining
+  dd.col-sm-8.mb-2.text-start #{employee.doj}
+
+  dt.col-sm-4.mb-2.text-start Date of Exit
+  dd.col-sm-8.mb-2.text-start #{employee.doe == '' ? 'NA' : employee.doe}
+
+  dt.col-sm-4.mb-2.text-start Address
+  dd.col-sm-8.mb-2.text-start #{employee.address}
+
+  dt.col-sm-4.mb-2.text-start Status
+  dd.col-sm-8.mb-2.text-start 
+    if employee.status == 1 || employee.status === 'Active'
+      span.badge.bg-success Active
+    else
+      span.badge.bg-secondary Inactive

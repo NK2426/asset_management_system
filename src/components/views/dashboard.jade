@@ -1,0 +1,60 @@
+
+extends layout.jade  
+
+block content
+  h2.text-success Welcome, Admin
+  hr
+  h4.mt-5.mb-3.text-info Dashboard Overview
+
+  .row
+    .col-md-6.mb-4
+      h6 Assets by Category
+      canvas#barChart(width="400" height="250")
+    .col-md-6.mb-4
+      h6 Asset Status Overview
+      canvas#doughnutChart(width="400" height="250")
+
+  script.
+    // Bar Chart
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Laptops', 'Mobiles', 'Tools', 'Accessories'],
+        datasets: [{
+          label: 'Count',
+          data: [25, 15, 10, 5],
+          backgroundColor: '#0d6efd'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Doughnut Chart
+    const doughnutCtx = document.getElementById('doughnutChart').getContext('2d');
+    new Chart(doughnutCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['In Use', 'In Stock', 'Scrapped'],
+        datasets: [{
+          label: 'Assets',
+          data: [40, 30, 10],
+          backgroundColor: ['#198754', '#ffc107', '#dc3545']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
