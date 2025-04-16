@@ -1,0 +1,74 @@
+extends layout
+
+block content
+  .container.mt-5
+    .row.justify-content-center
+      .col-md-10
+        .card.shadow
+          .card-header.bg-success.text-white
+            h4.mb-0
+              i.bi.bi-pencil-fill.me-2
+              | Edit Asset
+
+          .card-body
+            form(action=`/asset/edit/${asset.id}`, method="POST")
+              .row
+                .col-md-6.mb-3
+                  label.form-label(for="serial_number") Serial Number
+                  input.form-control.text-uppercase(type="text", name="serial_number", required, value=asset.serial_number.toUpperCase())
+
+                .col-md-6.mb-3
+                  label.form-label(for="make") Make
+                  select.form-select(name="make", required)
+                    option(value="") Select Make
+                    - const makes = ['Dell', 'HP', 'Apple', 'Lenovo', 'Acer']
+                    each make in makes
+                      option(value=make selected=(make == asset.make))= make
+
+              .row
+                .col-md-6.mb-3
+                  label.form-label(for="model") Model
+                  select.form-select(name="model", required)
+                    option(value="") Select Model
+                    - const models = ['XPS 13', 'Latitude 7400', 'Spectre x360', 'Elite Dragonfly', 'MacBook Pro', 'MacBook Air', 'ThinkPad X1 Carbon', 'ThinkPad T490', 'Aspire 5', 'Predator Helios']
+                    each model in models
+                      option(value=model selected=(model == asset.model))= model
+
+                .col-md-6.mb-3
+                  label.form-label(for="asset_category_id") Category
+                  select.form-select(name="asset_category_id", required)
+                    option(value="") Select Category
+                    each cat in categories
+                      option(value=cat.id selected=(cat.id == asset.asset_category_id))= cat.name
+
+              .row
+                .col-md-6.mb-3
+                  label.form-label(for="status") Status
+                  select.form-select(name="status")
+                    option(value="1" selected=asset.status == 1) Active
+                    option(value="0" selected=asset.status == 0) Inactive
+
+                .col-md-6.mb-3
+                  label.form-label(for="purchase_date") Purchase Date
+                  input.form-control(type="date", name="purchase_date", required, value=asset.purchase_date)
+
+              .row
+                .col-md-6.mb-3
+                  label.form-label(for="price") Price (₹)
+                  input.form-control(type="number", name="price", step="0.01", required, value=asset.price)
+
+                .col-md-6.mb-3
+                  label.form-label(for="warranty") Warranty Close Date
+                  input.form-control(type="date", name="warranty", required, value=asset.warranty_end_date)
+
+              .mb-3
+                label.form-label(for="description") Description
+                textarea.form-control(name="description", rows="3", required)= asset.description
+
+              .d-flex.justify-content-end.mt-4
+                button.btn.btn-success(type="submit")
+                  i.bi.bi-check-circle.me-1
+                  | Update Asset
+                a.btn.btn-secondary.ms-2(href="/asset")
+                  i.bi.bi-x-circle.me-1
+                  | Cancel

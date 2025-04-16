@@ -1,0 +1,115 @@
+extends layout
+
+block content
+  .container.mt-5
+    .row.justify-content-center
+      .col-md-10
+        .card.shadow
+          .card-header.bg-success.text-white
+            h4.mb-0
+              i.bi.bi-gear-fill.me-2
+              | Add New Asset
+
+          .card-body
+            form(action="/asset/add", method="POST")
+              .row
+                .col-md-6.mb-3
+                  label.form-label(for="serial_number") Serial Number
+                  input.form-control.text-uppercase(type="text", name="serial_number", placeholder="Enter serial number", required)
+
+                
+
+              .row
+               .col-md-6.mb-3
+                  label.form-label(for="make") Make
+                  select.form-select(name="make", id="make", required)
+                    option(value="") Select Make
+                    option(value="Dell") Dell
+                    option(value="HP") HP
+                    option(value="Apple") Apple
+                    option(value="Lenovo") Lenovo
+                    option(value="Acer") Acer
+                .col-md-6.mb-3
+                  label.form-label(for="model") Model
+                  select.form-select(name="model", id="model", required)
+                    option(value="") Select Model
+                    .col-md-6.mb-3
+                  
+
+      
+
+              .row
+                .col-md-6.mb-3
+                  label.form-label(for="asset_category_id") Category
+                  select.form-select(name="asset_category_id", required)
+                    option(value="") Select Category
+                    each cat in categories
+                      option(value=cat.id)= cat.name
+                .col-md-6.mb-3
+                  label.form-label(for="branch_id") Branch
+                  select.form-select(name="branch_id", required)
+                    option(value="") Select Branch
+                    each branch in branches
+                      option(value=branch.id)= branch.name  
+
+                
+
+              .row
+                .col-md-6.mb-3
+                  label.form-label(for="purchase_date") Purchase Date
+                  input.form-control(type="date", name="purchase_date", required)
+                .col-md-6.mb-3
+                  label.form-label(for="warranty") Warranty Close Date
+                  input.form-control(type="date", name="warranty", required)
+
+              .row
+                .col-md-6.mb-3
+                  label.form-label(for="price") Price (₹)
+                  input.form-control(type="number", name="price", placeholder="Enter asset price", step="0.01", required)
+                .col-md-6.mb-3
+                  label.form-label(for="status") Status
+                  select.form-select(name="status")
+                    option(value="Active") Active
+                    option(value="Inactive") Inactive
+                
+
+              .mb-3
+                label.form-label(for="description") Description
+                textarea.form-control(name="description", rows="3", placeholder="Enter description")
+
+              .d-flex.justify-content-end.mt-4
+                button.btn.btn-success(type="submit")
+                  i.bi.bi-check-circle.me-1
+                  | Add Asset
+                a.btn.btn-secondary.ms-2(href="/asset")
+                  i.bi.bi-x-circle.me-1
+                  | Cancel
+
+  
+  script.
+    document.addEventListener('DOMContentLoaded', function() {
+      const makeSelect = document.getElementById('make');
+      const modelSelect = document.getElementById('model');
+
+      const models = {
+        Dell: ['XPS 13', 'Latitude 7400'],
+        HP: ['Spectre x360', 'Elite Dragonfly'],
+        Apple: ['MacBook Pro', 'MacBook Air'],
+        Lenovo: ['ThinkPad X1 Carbon', 'ThinkPad T490'],
+        Acer: ['Aspire 5', 'Predator Helios']
+      };
+
+      makeSelect.addEventListener('change', function() {
+        const selectedMake = makeSelect.value;
+        modelSelect.innerHTML = '<option value="">Select Model</option>';
+
+        if (selectedMake && models[selectedMake]) {
+          models[selectedMake].forEach(function(model) {
+            const option = document.createElement('option');
+            option.value = model;
+            option.textContent = model;
+            modelSelect.appendChild(option);
+          });
+        }
+      });
+    });

@@ -9,12 +9,14 @@ html
     link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css')
 
   body
-    block content
+    extends layout.jade  
+
+block content
       .container.mt-5
         .card.shadow-sm
-          .card-header.bg-primary.text-white.d-flex.justify-content-between.align-items-center
+          .card-header.text-success.d-flex.justify-content-between.align-items-center
             h5.mb-0 Asset Categories
-            a.btn.btn-light.btn-sm(href="/asset-category/add")
+            a.btn.btn-success.btn-sm(href="/asset-category/add")
               i.bi.bi-plus-circle.me-1
               | Add Category
 
@@ -36,9 +38,9 @@ html
                         td #{category.createdAt.toLocaleDateString()}
                         td
                           a.btn.btn-sm.btn-warning(href="/asset-category/edit/#{category.id}")
-                            i.bi.bi-pencil-fill
+                            i.bi.bi-pencil-fill Edit
                           a.btn.btn-sm.btn-danger.ms-2(href="/asset-category/delete/#{category.id}" onclick="return confirm('Are you sure you want to delete this category?');")
-                            i.bi.bi-trash-fill
+                            i.bi.bi-trash-fill Delete
             else
               p.text-muted.mb-0 No categories found.
 

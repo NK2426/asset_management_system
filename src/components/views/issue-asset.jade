@@ -1,0 +1,130 @@
+extends layout
+
+block content
+  .container.mt-5
+    h2.text-success.mb-4 Issue Asset
+
+    form(action="/asset/issue", method="POST")
+      .row
+      
+        .col-md-6.mb-3
+          label.form-label(for="make") Make
+          select.form-select(name="make", id="make", required)
+            option(value="") Select Make
+            each make in makes
+              option(value=make)= make
+
+       
+        .col-md-6.mb-3
+          label.form-label(for="model") Model
+          select.form-select(name="model", id="model", required disabled)
+
+      
+        .col-md-6.mb-3
+          label.form-label(for="assetId") Asset
+          select.form-select(name="assetId", id="assetId", required disabled)
+            option(value="") Select Asset
+
+      
+        .col-md-6.mb-3
+          label.form-label(for="employeeId") Employee
+          select.form-select(name="employeeId", required)
+            option(value="") Select Employee
+            each emp in employees
+              option(value=emp.id)= emp.name
+
+      
+        .col-md-6.mb-3
+          label.form-label(for="branchId") Branch
+          select.form-select(name="branchId", required)
+            option(value="") Select Branch
+            each branch in branches
+              option(value=branch.id)= branch.name
+
+ 
+        .col-md-6.mb-3
+          label.form-label(for="issueDate") Issue Date
+          input.form-control(type="date", name="issueDate", required)
+
+
+      .d-flex.justify-content-end.mt-4
+        button.btn.btn-success(type="submit")
+          i.bi.bi-check-circle.me-1
+          | Issue Asset
+        a.btn.btn-secondary.ms-2(href="/asset")
+          i.bi.bi-x-circle.me-1
+          | Cancel
+
+   
+    hr.mt-5
+    h4.text-secondary.mb-3 Issued Asset History
+
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          th #
+          th Asset Name
+          th Branch
+          th Employee
+          th Issue Date
+          th Return Date
+          th Status
+      tbody
+        if assetHistories.length === 0
+          tr
+            td(colspan="7").text-center.text-muted No assets issued yet.
+        else
+          each history, index in assetHistories
+            tr
+              td= index + 1
+              td= history.asset.name
+              td= history.asset.branch.name
+              td= history.employee.name
+              td= history.issue_date.toDateString()
+              td= history.return_date ? history.return_date.toDateString() : '—'
+              td= history.status
+
+ 
+  script.
+    const allModels = !{JSON.stringify(modelsByMake)};
+    const allAssets = !{JSON.stringify(assetsByModel)};
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const makeSelect = document.getElementById('make');
+      const modelSelect = document.getElementById('model');
+      const assetSelect = document.getElementById('assetId');
+
+      makeSelect.addEventListener('change', function () {
+        const selectedMake = this.value;
+        modelSelect.innerHTML = '<option value="">Select Model</option>';
+        assetSelect.innerHTML = '<option value="">Select Asset</option>';
+        modelSelect.disabled = true;
+        assetSelect.disabled = true;
+
+        if (selectedMake && allModels[selectedMake]) {
+          allModels[selectedMake].forEach(model => {
+            const opt = document.createElement('option');
+            opt.value = model;
+            opt.textContent = model;
+            modelSelect.appendChild(opt);
+          });
+          modelSelect.disabled = false;
+        }
+      });
+
+      modelSelect.addEventListener('change', function () {
+        const selectedModel = this.value;
+        assetSelect.innerHTML = '<option value="">Select Asset</option>';
+        assetSelect.disabled = true;
+
+        if (selectedModel && allAssets[selectedModel]) {
+          allAssets[selectedModel].forEach(asset => {
+            const opt = document.createElement('option');
+            opt.value = asset.id;
+            opt.textContent = asset.name;
+            assetSelect.appendChild(opt);
+          });
+          assetSelect.disabled = false;
+        }
+      });
+    });

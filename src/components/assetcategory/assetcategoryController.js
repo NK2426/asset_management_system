@@ -30,7 +30,6 @@ const getAll = async (req, res, next) => {
             offset
         });
 
-        const response = helper.getPagingData(data, page, limit);
         res.render('assetcategory', {
             categories: data.rows,
             totalItems: data.totalItems,

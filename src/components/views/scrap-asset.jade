@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .container.mt-5
+    h3.text-success.mb-4 Scrapped Assets Report
+
+    
+    a.btn.btn-primary.mb-3(href="/assets/scrap/new") Scrap New Asset
+
+    
+    if search
+      p.text-muted Search result for: "#{search}"
+
+   
+    table#scrapReportTable.table.table-hover.table-striped.table-bordered
+      thead
+        tr
+          th ID
+          th Asset Name
+          th Reason
+          th Scrapped By
+          th Date
+      tbody
+        each item in scrappedAssets
+          tr
+            td= item.id
+            td= item.asset ? item.asset.make + ' ' + item.asset.model : '-'
+            td= item.reason
+            td= item.scrapped_by
+            td= new Date(item.scrappedAt).toLocaleDateString()
+
+
+  link(rel='stylesheet', href='https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css')
+  script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+  script(src='https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js')
+  script(src='https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js')
+
+  script.
+    $(document).ready(function () {
+      $('#scrapReportTable').DataTable({
+        language: {
+          searchPlaceholder: "Search scrapped assets...",
+          search: "_INPUT_",
+        },
+        pageLength: 10
+      });
+    });

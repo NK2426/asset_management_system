@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  .container.mt-5
+    h3.text-success.mb-4 Scrap New Asset
+
+    form(action="/assets/scrap" method="POST")
+      .mb-3 
+        label.form-label(for="asset_id") Select Asset
+        select.form-select(name="asset_id" required)
+          option(value="" disabled selected) -- Select Asset --
+          each asset in activeAssets
+            option(value=asset.id)= asset.make + ' ' + asset.model
+      .mb-3
+        label.form-label(for="reason") Reason
+        textarea.form-control(name="reason", required)
+      .mb-3
+        label.form-label(for="scrapped_by") Scrapped By
+        input.form-control(type="text", name="scrapped_by", required)
+      button.btn.btn-success(type="submit") Scrap
+      a.btn.btn-secondary.ms-2(href="/scrap-asset") Cancel
