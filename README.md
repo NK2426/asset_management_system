@@ -29,6 +29,9 @@ This is a web-based Asset Management System built using **Node.js**, **Express**
 git clone https://github.com/NK2426/asset_management_system.git
 cd asset-management-system
 
+# note
+database file also added for the setup
+
 # 2. Install dependencies
 npm install
 
@@ -51,3 +54,5 @@ http://localhost:3090/login
 Username: admin@ams.com
 
 Password: test123
+
+

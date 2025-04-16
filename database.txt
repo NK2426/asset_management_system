@@ -1,0 +1,88 @@
+CREATE TABLE assetcategories (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL UNIQUE,
+  status INTEGER DEFAULT 1,
+  createdAt TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE asset_histories (
+  id SERIAL PRIMARY KEY,
+  asset_id INTEGER NOT NULL,
+  employee_id INTEGER NOT NULL,
+  branch_id INTEGER NOT NULL,
+  issue_date TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  return_date TIMESTAMP WITH TIME ZONE,
+  status VARCHAR(50) NOT NULL DEFAULT 'Issued',
+  createdAt TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  
+ 
+);
+CREATE TABLE assets (
+  id SERIAL PRIMARY KEY,
+  uuid UUID NOT NULL DEFAULT uuid_generate_v4(),
+  serial_number VARCHAR NOT NULL UNIQUE,
+  make VARCHAR,
+  model VARCHAR,
+  asset_category_id INTEGER NOT NULL,
+  status VARCHAR,
+  purchase_date VARCHAR,
+  price INTEGER,
+  warranty_end_date VARCHAR,
+  employee_id INTEGER,
+  branch_id INTEGER,
+  description VARCHAR NOT NULL,
+  createdAt TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+);
+
+CREATE TABLE branches (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR NOT NULL UNIQUE,
+  status INTEGER DEFAULT 1,
+  createdAt TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE public.employees (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    email VARCHAR NOT NULL UNIQUE,
+    phone VARCHAR NOT NULL,
+    department VARCHAR NOT NULL,
+    designation VARCHAR NOT NULL,
+    doj DATE NOT NULL,
+    doe DATE,
+    salary INTEGER NOT NULL,
+    address VARCHAR NOT NULL,
+    status VARCHAR NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE public.scrap_assets (
+    id SERIAL PRIMARY KEY,
+    asset_id INTEGER NOT NULL,
+    reason TEXT,
+    scrapped_by VARCHAR,
+    employee_id INTEGER,
+    scrappedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE public.users (
+    uid SERIAL PRIMARY KEY,
+    uuid VARCHAR NOT NULL UNIQUE,
+    username VARCHAR NOT NULL UNIQUE,
+    name VARCHAR,
+    email VARCHAR NOT NULL UNIQUE,
+    password VARCHAR NOT NULL,
+    roleID INTEGER NOT NULL,
+    createdBy INTEGER NOT NULL,
+    modifiedBy INTEGER NOT NULL,
+    status INTEGER,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+INSERT INTO public.users (uuid, username, name, email, password, roleID, createdBy, modifiedBy, status)
+VALUES 
+('administrator', 'admin', 'administrator', 'admin@ams.com', '$2a$10$s0OO7MhI7n/skunP.z6s..A/LKEzLmmsHeHe/y709DBbzKJlZzKCe', 1, 1, 1, 1);
